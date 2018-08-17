@@ -1,0 +1,2 @@
+# dynamicfieldsjquery
+Let’s assume you have a registration or survey page which asks user to enter student details (students can be multiple). So we will let them enter as many Students they want using add new button, Also I have given the provision to remove student list. I am passing the data from the front end as a json data, so it can can be used for any of the back end programming languages. You can use this code whenever you need to dynamically add multiple fields.

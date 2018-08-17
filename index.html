@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Input fields dynamically</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-light bg-light">
+  <span class="navbar-brand mb-0 h1">Add or Remove input fields dynamically</span>
+</nav>
+	<div class="container">
+		<br>
+		<h4 align="center">Please fill the form</h4>  
+		<div class="form-group">
+			<form name="add_name" id="add_name">
+
+
+				<div class="table-responsive">  
+					<table class="table" id="dynamic_field">  
+						<tr>  
+							<td><input type="text" name="name" placeholder="Enter your Name" class="form-control" required="" /></td>  
+							<td><input type="text" name="age" placeholder="Enter your Age" class="form-control" required="" /></td> 
+							<td><input type="text" name="department" placeholder="Enter your Department" class="form-control" required="" /></td> 
+							<td><button type="button" name="add" id="add" class="btn btn-warning">Add More</button></td>  
+						</tr>  
+					</table>  
+					<input type="button" name="submit" id="submit" class="btn btn-danger" value="Submit" />  
+				</div>
+
+
+			</form>  
+		</div> 
+	</div>
+
+
+	<script type="text/javascript">
+		$(document).ready(function(){      
+			var i=1;  
+
+
+			$('#add').click(function(){  
+				i++;  
+				$('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td><input type="text" name="name" placeholder="Enter your Name" class="form-control" required="" /></td><td><input type="text" name="age" placeholder="Enter your Age" class="form-control" required="" /></td><td><input type="text" name="department" placeholder="Enter your Department" class="form-control" required="" /></td> <td><button type="button" name="remove" id="'+i+'" class="btn btn-info btn_remove">Remove</button></td></tr>');  
+			});
+
+
+			$(document).on('click', '.btn_remove', function(){  
+				var button_id = $(this).attr("id");   
+				$('#row'+button_id+'').remove();  
+			});  
+
+
+			$('#submit').click(function(evt){    
+				 evt.preventDefault();
+				var data = $('#dynamic_field tr').map(function () {
+					var values = {};
+					$('input', $(this)).each(function () {
+						values[this.name] = this.value;
+
+					});
+					return values;
+				}).get(); 
+				console.log(JSON.stringify(data));       
+				$.ajax({  
+					url:'add.php',  
+					method:"POST",  
+					data:{
+						content: JSON.stringify(data)
+					},
+					type:'json',
+					 success:function(evt){
+                   	var evt= JSON.parse(evt);
+                   	console.log(evt.status);
+                      if (evt.status === true)
+                       {
+                       	alert("success");
+                       }
+                       else
+                       {
+                       	alert("Fail");
+                       }
+                   } 
+				});  
+			});
+
+
+		});  
+	</script>
+</body>
+</html>

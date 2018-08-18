@@ -19,7 +19,7 @@
 
 
 				<div class="table-responsive">  
-					<table class="table" id="dynamic_field">  
+					<table class="table" id="add_new_field">  
 						<tr>  
 							<td><input type="text" name="name" placeholder="Enter your Name" class="form-control" required="" /></td>  
 							<td><input type="text" name="age" placeholder="Enter your Age" class="form-control" required="" /></td> 
@@ -43,7 +43,7 @@
 
 			$('#add').click(function(){  
 				i++;  
-				$('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td><input type="text" name="name" placeholder="Enter your Name" class="form-control" required="" /></td><td><input type="text" name="age" placeholder="Enter your Age" class="form-control" required="" /></td><td><input type="text" name="department" placeholder="Enter your Department" class="form-control" required="" /></td> <td><button type="button" name="remove" id="'+i+'" class="btn btn-info btn_remove">Remove</button></td></tr>');  
+				$('#add_new_field').append('<tr id="row'+i+'" class="dynamic-added"><td><input type="text" name="name" placeholder="Enter your Name" class="form-control" required="" /></td><td><input type="text" name="age" placeholder="Enter your Age" class="form-control" required="" /></td><td><input type="text" name="department" placeholder="Enter your Department" class="form-control" required="" /></td> <td><button type="button" name="remove" id="'+i+'" class="btn btn-info btn_remove">Remove</button></td></tr>');  
 			});
 
 
@@ -55,15 +55,14 @@
 
 			$('#submit').click(function(evt){    
 				 evt.preventDefault();
-				var data = $('#dynamic_field tr').map(function () {
+				var data = $('#add_new_field tr').map(function () {
 					var values = {};
 					$('input', $(this)).each(function () {
 						values[this.name] = this.value;
 
 					});
 					return values;
-				}).get(); 
-				console.log(JSON.stringify(data));       
+				}).get();       
 				$.ajax({  
 					url:'add.php',  
 					method:"POST",  
